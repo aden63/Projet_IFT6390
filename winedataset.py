@@ -17,10 +17,6 @@ class WineDataset(Dataset):
     def __getitem__(self, index):
         X = self.data[index, :-1]
         y = self.data[index, -1].type(torch.LongTensor)
-        if y < 6:
-            y -= y
-        elif y >= 6:
-            y -= y - 1
 
         return X, y
 
