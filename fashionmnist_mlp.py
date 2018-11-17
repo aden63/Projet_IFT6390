@@ -40,7 +40,6 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           batch_size=batch_size,
                                           shuffle=False)
 
-
 net = MLP(input_size, hidden_size, num_classes)
 net.cuda()
 
@@ -66,6 +65,8 @@ for epoch in range(num_epochs):
             print('Epoch [%d/%d], Step [%d/%d], Loss: %.4f'
                   % (epoch + 1, num_epochs, i + 1, len(train_dataset) // batch_size, loss.item()))
 
+import time
+start=time.time()
 # Test the Model
 correct = 0
 total = 0
@@ -75,7 +76,7 @@ for images, labels in test_loader:
     _, predicted = torch.max(outputs.data, 1)
     total += labels.size(0)
     correct += (predicted.cpu() == labels).sum()
-
+print(time.time() - start)
 print('Accuracy of the network on the 10000 test images: %d %%' % (100 * correct / total))
 # Save the Model
 torch.save(net.state_dict(), 'model.pkl')
